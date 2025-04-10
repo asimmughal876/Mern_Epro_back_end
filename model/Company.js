@@ -1,33 +1,24 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-    user_id: {
+const ComponySchema = new mongoose.Schema({
+    Compony_id: {
         type: mongoose.Schema.Types.ObjectId,
         default: () => new mongoose.Types.ObjectId(),
         index: true,
         unique: true
     },
-    user_name: {
+    company_name: {
         type: String,
         required: true
     },
-    user_email: {
+    company_details: {
         type: String,
         required: true
     },
-    user_pass: {
+    compony_image: {
         type: String,
-        required: true
-    },
-    user_image: {
-        type: String,
-        required: true
-    },
-    role_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'role',
         required: true
     },
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('Compony', ComponySchema);

@@ -7,20 +7,14 @@ const speakerSchema = new mongoose.Schema({
     index: true,
     unique: true
   },
-  name: {
+  speaker_name: {
     type: String,
     required: true
   },
-  bio: {
+  speaker_bio: {
     type: String
   },
-  expertise: {
-    type: String
-  },
-  contact_email: {
-    type: String
-  },
-  photo_url: {
+  speaker__url: {
     type: String 
   },
   created_at: {

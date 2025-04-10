@@ -19,6 +19,10 @@ const expoSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  expo_image: {
+    type: String,
+    required: true
+  },
   location: {
     type: String,
     required: true
