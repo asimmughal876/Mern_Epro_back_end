@@ -1,0 +1,96 @@
+const mongoose = require('mongoose');
+
+const expoSchema = new mongoose.Schema({
+  expo_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: () => new mongoose.Types.ObjectId(),
+    index: true,
+    unique: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  start_date: {
+    type: Date,
+    required: true
+  },
+  end_date: {
+    type: Date,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String
+  },
+  theme: {
+    type: String
+  },
+  status: {
+    type: String,
+    enum: ['upcoming', 'ongoing', 'completed', 'cancelled'],
+    default: 'upcoming'
+  },
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+  booths: [
+    {
+      booth_number: {
+        type: String,
+        required: true
+      },
+      location: {
+        type: String
+      },
+      size: {
+        type: String
+      },
+      coordinates: {
+        x: { type: Number, required: true },
+        y: { type: Number, required: true }
+      },
+      assigned_to: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exhibitor',
+        default: null // Assigned only after approval
+      },
+      assignment_requests: [
+        {
+          exhibitor_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Exhibitor',
+            required: true
+          },
+          status: {
+            type: String,
+            enum: ['pending', 'accepted', 'rejected'],
+            default: 'pending'
+          },
+          requested_at: {
+            type: Date,
+            default: Date.now
+          },
+          responded_at: {
+            type: Date
+          }
+        }
+      ],
+      status: {
+        type: String,
+        enum: ['available', 'booked', 'unavailable'],
+        default: 'available'
+      },
+      created_at: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ]  
+});
+
+module.exports = mongoose.model('Expo', expoSchema);
