@@ -54,6 +54,9 @@ const expoSchema = new mongoose.Schema({
       size: {
         type: String
       },
+      floor: {
+        type: String
+      },
       coordinates: {
         x: { type: Number, required: true },
         y: { type: Number, required: true }
