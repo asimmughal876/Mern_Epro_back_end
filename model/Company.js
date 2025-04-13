@@ -19,6 +19,11 @@ const ComponySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    exhibitor_id: {
+    type: mongoose.Schema.Types.ObjectId,
+       ref: 'Exhibitor',
+       required: true
+     },
 });
 
 module.exports = mongoose.model('Compony', ComponySchema);

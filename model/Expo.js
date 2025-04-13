@@ -61,7 +61,7 @@ const expoSchema = new mongoose.Schema({
       assigned_to: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Exhibitor',
-        default: null // Assigned only after approval
+        default: null 
       },
       assignment_requests: [
         {

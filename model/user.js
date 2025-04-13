@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
     },
     user_image: {
         type: String,
-        required: true
+        required: true,
+       default: null 
     },
     role_id: {
         type: mongoose.Schema.Types.ObjectId,

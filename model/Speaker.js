@@ -14,8 +14,9 @@ const speakerSchema = new mongoose.Schema({
   speaker_bio: {
     type: String
   },
-  speaker__url: {
-    type: String 
+  speaker__image: {
+    type: String, 
+    default: null 
   },
   created_at: {
     type: Date,

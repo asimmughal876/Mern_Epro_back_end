@@ -11,6 +11,11 @@ const ExhibitorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        enum: ['pending', 'accepted', 'rejected'],
+        default: 'pending'
+      },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',

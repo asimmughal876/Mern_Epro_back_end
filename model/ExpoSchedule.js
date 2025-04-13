@@ -12,13 +12,6 @@ const expoScheduleSchema = new mongoose.Schema({
     ref: 'Expo',
     required: true
   },
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String
-  },
   speaker_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Speaker' 
