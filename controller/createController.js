@@ -2,7 +2,9 @@ const Company = require('../model/Company');
 const Exhibitor = require('../model/Exhibitor');
 const Expo = require('../model/Expo');
 const user = require('../model/user');
-
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 const addExpo = async (req, res) => {
   try {
@@ -110,4 +112,36 @@ const addCompony = async (req, res) => {
 };
 
 
-module.exports = { addExpo, addUser, addExhi, addCompony };
+const signInUser = async (req, res) => {
+  try {
+    const { user_email, user_pass } = req.body;
+
+    const existingUser = await User.findOne({ user_email });
+    if (!existingUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(user_pass, existingUser.user_pass);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign(
+      { id: existingUser._id, email: existingUser.user_email },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+    
+    res.status(200).json({
+      message: 'User signed in successfully',
+      token,
+    });
+
+  } catch (err) {
+    console.error('Sign-in error:', err);
+    res.status(500).json({ message: 'Sign-in failed', error: err.message });
+  }
+};
+
+
+module.exports = { addExpo, addUser, addExhi, addCompony, signInUser };
