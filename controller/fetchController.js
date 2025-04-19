@@ -1,4 +1,5 @@
 const Company = require('../model/Company');
+const Exhibitor = require('../model/Exhibitor');
 const Expo = require('../model/Expo');
 const user = require('../model/user');
 
@@ -15,7 +16,7 @@ const fetchExpos = async (req, res) => {
     console.error('Error Fetching expo:', err);
     res.status(500).json({
       message: 'Failed to Fetch expo',
-      error: err.expoData
+      error: err.message
     });
   }
 };
@@ -32,27 +33,27 @@ const fetchUser = async (req, res) => {
     console.error('Error Fetching user:', err);
     res.status(500).json({
       message: 'Failed to Fetch user',
-      error: err.userData
+      error: err.message
     });
   }
 };
 const fetchExhi = async (req, res) => {
   try {
+    const ExhiData = await Exhibitor.find().populate('user_id');
 
-    const ExhiData = await user.find();
-
-    res.status(201).json({
-      message: 'Exhibitor Fetch successfully',
+    res.status(200).json({
+      message: 'Exhibitor fetched successfully',
       data: ExhiData
     });
   } catch (err) {
     console.error('Error Fetching Exhibitor:', err);
     res.status(500).json({
-      message: 'Failed to Fetch Exhibitor',
-      error: err.ExhiData
+      message: 'Failed to fetch Exhibitor',
+      error: err.message 
     });
   }
 };
+
 const fetchCompany = async (req, res) => {
   try {
 
@@ -66,9 +67,28 @@ const fetchCompany = async (req, res) => {
     console.error('Error Fetching Company:', err);
     res.status(500).json({
       message: 'Failed to Fetch Company',
-      error: err.comData
+      error: err.message
     });
   }
 };
 
-module.exports = {fetchExpos,fetchUser,fetchExhi,fetchCompany};
+const fetchbooth = async (req, res) => {
+  try {
+    const expos = await Expo.find({}, { booths: 1 }).populate('booths.assigned_to');
+
+    const allBooths = expos.flatMap(expo => expo.booths);
+
+    res.status(200).json({
+      message: 'Booths fetched successfully',
+      data: allBooths
+    });
+  } catch (err) {
+    console.error('Error Fetching Booth:', err);
+    res.status(500).json({
+      message: 'Failed to fetch booths',
+      error: err.message
+    });
+  }
+};
+
+module.exports = {fetchExpos,fetchUser,fetchExhi,fetchCompany,fetchbooth};

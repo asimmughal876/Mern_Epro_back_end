@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   role_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'role',
-    required: true
+    default: null
   }
 });
 
